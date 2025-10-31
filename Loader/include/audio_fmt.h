@@ -1,23 +1,22 @@
 #ifndef __AUDIO_FMT_H__
 #define __AUDIO_FMT_H__
+#include <cstdint>
 
 namespace wwist {
 
-	typedef unsigned char	uchar;	// unsigned char
-	typedef unsigned short  ushort; // unsigned short
-	typedef unsigned int	uint;	// unsigned int
+	typedef unsigned char	BYTE;	// 1 byte
+	typedef unsigned short  WORD;	// 2 bytes
+	typedef unsigned long	DWORD;	// 4 bytes
 
     /* Audio File Information */
-    struct AudioInfo {
-        ushort sample_rate;
-        uchar  channel;
-        uchar  bit_depth;
-    	uchar  flag;
+    struct AudioMetaData {
+        WORD sample_rate;
+        BYTE channel;
+        BYTE bit_depth;
 
-    	AudioInfo(const uint& sample_rate
-    			, const uchar& bit_depth
-    			, const unsigned char& channel
-    			, const unsigned char& flag)
+    	AudioMetaData(const WORD& sample_rate
+    				, const BYTE& bit_depth
+    				, const BYTE& channel)
     	{
     		this->sample_rate	= sample_rate;
     		this->bit_depth		= bit_depth;
@@ -30,30 +29,41 @@ namespace wwist {
 	//* wav format data
     namespace wav {
 
-        /* RIFF Chunk */
-		struct RIFF {
-			char id[4];
-			long size;
-        	char type[4];
+		// padding blocker
+		#pragma pack(push, 1)
+
+        /* RIFF Header */
+		struct RIFFChunk {
+			BYTE	 id[4];
+        	BYTE	 type[4];
+			uint32_t size;
 		};
 
-        /* FMT Chunk */
-		struct FMT {
-			char  id[4];		// "fmt " (0x666D7420)
-			long  size;			// linear PCM: (0x10000000), other: (16 + extension parameters)
-			short type;
-			short channel;		// mono: 1(0x0100), stereo: 2(0x0200)
-			long  sample_rate;	// 8kHz: (0x401F0000), 44.1kHz: (0x44AC0000)
-			long  byte;			// sample_rate * block_size
-			short block_size;	// channel * bit depth / 8
-			short bit_depth;	// bit depth (8: 0x0800 or 16: 0x1000)
+        /* FMT SubChunk */
+		struct FMTChunk {
+			BYTE	 id[4];			// "fmt " (0x666D7420)
+			uint32_t size;			// linear PCM: (0x10000000), other: (16 + extension parameters)
+			uint16_t type;			// PCM: (0x0100), IEEE float: (0x0300)
+			uint16_t channel;		// mono: (0x0100), stereo: (0x0200)
+			uint32_t sample_rate;	// 8kHz: (0x401F0000), 44.1kHz: (0x44AC0000)
+			uint32_t byte;			// sample_rate * block_size
+			uint16_t block_size;	// channel * bit depth / 8
+			uint16_t bit_depth;		// bit depth (0x0800 or 0x1000)
 		};
 
-    	/* DATA Chunk */
-		struct DATA {
+    	/* Chunk Header*/
+    	struct ChunkHeader {
+    		BYTE	 id[4];
+    		uint32_t size;
+    	};
+
+    	/* WAV Extension Chunk */
+		struct ExtensionChunk {
+			uint16_t size;
 
 		};
 
+		#pragma pack(pop)
     	// end wav
     }
 

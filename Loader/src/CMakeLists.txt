@@ -5,6 +5,7 @@ add_executable(${PROJECT_NAME} ./main.cpp)
 target_sources(${PROJECT_NAME}
         PRIVATE
         main.cpp
+        audio_loader.cpp
         loader_wav.cpp
 )
 

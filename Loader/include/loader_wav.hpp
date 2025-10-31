@@ -6,33 +6,41 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
+#include "audio_loader.h"
+
 
 namespace wwist {
-	/* Wav Format Loader */
-	class LoaderWav {
-	private:
-		struct Sound {
+
+	namespace wav {
+		/* Wav Format Loader */
+		class LoaderWav : public IAudioLoader {
+		public:
+			~LoaderWav() override {};
+
+			/** @brief Start loading from file_path
+			 *  @param file_path audio file path name
+			 *  @return true
+			 */
+			bool Load(const std::string& file_path) override;
+
+
+			bool Delete(const std::string& file_path) override;
+			/** @brief get audio file information
+			 *  @param file_path audio file path name
+			 *  @return Audio file information
+			 */
+			AudioMetaData GetInfo(const std::string& file_path) override;
+
+		private:
+			/* temporary data */
+			struct Sound {
+
+			};
 
 		};
 
-	public:
-		~LoaderWav() {};
-
-		/** @brief Start loading from file_path
-		 *  @param file_path audio file path name
-		 *  @return true
-		 */
-		int Load(const std::string& file_path);
-
-		/** @brief get audio file information
-		 *  @param file_path audio file path name
-		 *  @return Audio file information
-		 */
-		AudioInfo GetInfo(const std::string& file_path);
-
-
-
-	};
+		// end wav
+	}
 
 	// end wwist
 }
