@@ -1,22 +1,69 @@
 #ifndef __AUDIO_FMT_H__
 #define __AUDIO_FMT_H__
-#include <cstdint>
 
 namespace wwist {
 
-	typedef unsigned char	BYTE;	// 1 byte
-	typedef unsigned short  WORD;	// 2 bytes
-	typedef unsigned long	DWORD;	// 4 bytes
+	typedef unsigned char	MY_BYTE;	// for 1 byte data.
+	typedef unsigned short  MY_WORD;	// for 2 bytes data.
+	typedef unsigned long	MY_DWORD;	// for 4 bytes data.
+	typedef MY_DWORD		CHUNK_ID;	// FOURcc
 
-    /* Audio File Information */
+	/**
+	 * @brief creates a new 4-character code from four characters.
+	 * @code
+	 *  constexpr CHUNK_ID YOU_ID = CHUNK_ID('Y', 'O', 'U', ' ');
+	 * @endcode
+	*/
+	#define Chunk_ID(a, b, c, d) (a + (b << 8) + (c << 16) + (d << 24))
+	constexpr CHUNK_ID RIFF_ID = Chunk_ID('R', 'I', 'F', 'F');
+	constexpr CHUNK_ID LIST_ID = Chunk_ID('L', 'I', 'S', 'T');
+	constexpr CHUNK_ID FMT_ID  = Chunk_ID('f', 'm', 't', ' ');
+	constexpr CHUNK_ID DATA_ID = Chunk_ID('d', 'a', 't', 'a');
+
+	/**
+	 * @brief swaps the byte order of a 32-bit data value.
+	 * @param data reference to the 32-bit data (DWORD) whose byte order will be swapped.
+	 * @details
+	 *	this function reverses the byte order by shifting each byte to its
+	 *	opposite position:
+	 *	the lowest 8 bits are shifted to the highest 8 bits position.
+	 *	the second lowest 8 bits are shifted to the second highest position.
+	 *	the second highest 8 bits are shifted to the second lowest position.
+	 *	the highest 8 bits are shifted to the lowest position.
+	 *	this effectively converts between little-endian and big-endian formats,
+	 *	commonly used for endian conversion in data processing.
+	*/
+	inline void Swap32Bit(MY_DWORD& data) {
+		data = ((data & 0x000000FF) << 24)
+			 + ((data & 0x0000FF00) << 8)
+			 + ((data & 0x00FF0000) >> 8)
+			 + ((data & 0xFF000000) >> 24);
+	};
+
+	/**
+	 * @brief swaps the byte order of a 16-bit data value.
+	 * @param data reference to the 16-bit data (WORD) whose byte order will be swapped.
+	 * @details
+	 * 	this function reverses the byte order by shifting the lower 8 bits
+	 * 	to the upper 8 bits and the upper 8 bits to the lower 8 bits,
+	 * 	effectively converting between little-endian and big-endian formats.
+	 * 	It is commonly used for endian conversion in data processing.
+	*/
+	inline void Swap16Bit(MY_WORD& data) {
+		data = ((data & 0x00FF) << 8)
+			 + ((data & 0xFF00) >> 8);
+	};
+
+
+    /** Audio File Information */
     struct AudioMetaData {
-        WORD sample_rate;
-        BYTE channel;
-        BYTE bit_depth;
+        MY_WORD sample_rate;
+        MY_BYTE channel;
+        MY_BYTE bit_depth;
 
-    	AudioMetaData(const WORD& sample_rate
-    				, const BYTE& bit_depth
-    				, const BYTE& channel)
+    	AudioMetaData(const MY_WORD& sample_rate
+    				, const MY_BYTE& bit_depth
+    				, const MY_BYTE& channel)
     	{
     		this->sample_rate	= sample_rate;
     		this->bit_depth		= bit_depth;
@@ -26,45 +73,8 @@ namespace wwist {
     };
 
 
-	//* wav format data
+	/** wav format data */
     namespace wav {
-
-		// padding blocker
-		#pragma pack(push, 1)
-
-        /* RIFF Header */
-		struct RIFFChunk {
-			BYTE	 id[4];
-        	BYTE	 type[4];
-			uint32_t size;
-		};
-
-        /* FMT SubChunk */
-		struct FMTChunk {
-			BYTE	 id[4];			// "fmt " (0x666D7420)
-			uint32_t size;			// linear PCM: (0x10000000), other: (16 + extension parameters)
-			uint16_t type;			// PCM: (0x0100), IEEE float: (0x0300)
-			uint16_t channel;		// mono: (0x0100), stereo: (0x0200)
-			uint32_t sample_rate;	// 8kHz: (0x401F0000), 44.1kHz: (0x44AC0000)
-			uint32_t byte;			// sample_rate * block_size
-			uint16_t block_size;	// channel * bit depth / 8
-			uint16_t bit_depth;		// bit depth (0x0800 or 0x1000)
-		};
-
-    	/* Chunk Header*/
-    	struct ChunkHeader {
-    		BYTE	 id[4];
-    		uint32_t size;
-    	};
-
-    	/* WAV Extension Chunk */
-		struct ExtensionChunk {
-			uint16_t size;
-
-		};
-
-		#pragma pack(pop)
-    	// end wav
     }
 
 	// end wwist

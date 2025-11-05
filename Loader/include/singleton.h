@@ -1,5 +1,5 @@
-#ifndef LOADER_SINGLETON_H
-#define LOADER_SINGLETON_H
+#ifndef __SINGLETON_H__
+#define __SINGLETON_H__
 
 namespace wwist {
 
@@ -35,4 +35,4 @@ namespace wwist {
 
 }
 
-#endif // LOADER_SINGLETON_H
+#endif // __SINGLETON_H__
