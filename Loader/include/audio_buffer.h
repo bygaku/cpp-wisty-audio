@@ -1,5 +1,5 @@
-#ifndef __AUDIO_BUFFER_H__
-#define __AUDIO_BUFFER_H__
+#ifndef AUDIO_BUFFER_INCLUDE
+#define AUDIO_BUFFER_INCLUDE
 #include <memory>
 #include <cassert>
 #include <vector>
@@ -58,4 +58,4 @@ namespace wwist {
 }
 
 
-#endif //__AUDIO_BUFFER_H__
+#endif //AUDIO_BUFFER_INCLUDE
