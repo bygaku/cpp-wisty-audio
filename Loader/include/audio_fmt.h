@@ -1,5 +1,5 @@
-#ifndef __AUDIO_FMT_H__
-#define __AUDIO_FMT_H__
+#ifndef AUDIO_FMT_INCLUDE
+#define AUDIO_FMT_INCLUDE
 
 namespace wwist {
 
@@ -80,4 +80,4 @@ namespace wwist {
 	// end wwist
 }
 
-#endif // __AUDIO_FMT_H__
+#endif // AUDIO_FMT_INCLUDE

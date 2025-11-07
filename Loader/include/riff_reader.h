@@ -1,5 +1,5 @@
-#ifndef __RIFF_READER_H__
-#define __RIFF_READER_H__
+#ifndef RIFF_READER_INCLUDE
+#define RIFF_READER_INCLUDE
 #include <map>
 
 namespace wwist {
@@ -40,4 +40,4 @@ namespace wwist {
 	};
 }
 
-#endif // __RIFF_READER_H__
+#endif // RIFF_READER_INCLUDE

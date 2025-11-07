@@ -1,9 +1,10 @@
-#ifndef __SINGLETON_H__
-#define __SINGLETON_H__
+#ifndef SINGLETON_INCLUDE
+#define SINGLETON_INCLUDE
 
 namespace wwist {
 
-	/** Base Class
+	/**
+	 * @brief Singleton base class.
 	 * @attention Define “friend” in the inheritance target.
 	 * @code
 	 *		class ___ : public wwist::Singleton< ___ >
@@ -24,15 +25,15 @@ namespace wwist {
 		}
 
 	private:
-		Singleton(const Singleton&) = delete;
+		Singleton(const Singleton&)		 = delete;
 		void operator=(const Singleton&) = delete;
 
 	protected:
-		Singleton() {};
-		~Singleton() {};
+		Singleton()	 = default;
+		~Singleton() = default;
 
 	};
 
 }
 
-#endif // __SINGLETON_H__
+#endif // SINGLETON_INCLUDE

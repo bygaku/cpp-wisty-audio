@@ -1,5 +1,5 @@
-#ifndef __WAV_FMT_H__
-#define __WAV_FMT_H__
+#ifndef WAV_FMT_INCLUDE
+#define WAV_FMT_INCLUDE
 #include "audio_fmt.h"
 #include <vector>
 
@@ -44,4 +44,4 @@ namespace wwist::wav {
 
 } // end wwist::wav
 
-#endif //__WAV_FMT_H__
+#endif //WAV_FMT_INCLUDE

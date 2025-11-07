@@ -4,7 +4,8 @@
 int main() {
 	using namespace wwist;
 
-	char file_path[] = "C:/Workspace/DevAudio/WistyAudio/Loader/resource/wood.wav";
+	char file_path[] = "C:/Workspace/DevAudio/WistyAudio/Loader/resource/intuition.wav";
+	char file_pat[]  = "C:/Workspace/DevAudio/WistyAudio/Loader/resource/wood.wav";
 	wav::BUFF_WAV buf_l;
 	wav::BUFF_WAV buf_r;
 

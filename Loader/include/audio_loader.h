@@ -1,5 +1,5 @@
-#ifndef __AUDIO_LOADER_H__
-#define __AUDIO_LOADER_H__
+#ifndef AUDIO_LOADER_INCLUDE
+#define AUDIO_LOADER_INCLUDE
 #include "singleton.h"
 //#include "wav_fmt.h"
 
@@ -43,4 +43,4 @@
 	// }
 
 
-#endif // __AUDIO_LOADER_H__
+#endif // AUDIO_LOADER_INCLUDE

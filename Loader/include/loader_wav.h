@@ -1,5 +1,5 @@
-#ifndef __LOADER_WAV_H__
-#define __LOADER_WAV_H__
+#ifndef LOADER_WAV_INCLUDE
+#define LOADER_WAV_INCLUDE
 
 #include "wav_fmt.h"
 #include "riff_reader.h"
@@ -25,17 +25,17 @@ namespace wwist::wav {
 	 * @retval <false> failure reading
 	 * @retval <true> success reading
 	 */
-	bool ReadWavFile(char		file_name[],
-	                 wav::BUFF_WAV* wav_l,
-	                 wav::BUFF_WAV* wav_r,
-	                 short*			channel_num,
-	                 int*			sample_rate
-	                 )
+	inline bool ReadWavFile(char			file_name[],
+							wav::BUFF_WAV*	wav_l,
+							wav::BUFF_WAV*	wav_r,
+							short*			channel_num,
+							int*			sample_rate
+							)
 	{
 		RIFFReader riff_reader(file_name);
 		if (riff_reader.GetFileSize() == 0) return false;
 
-		MyWAVEHEADER myWH;
+		MyWAVEHEADER myWH{};
 		if (riff_reader.GetChunkSize(FMT_ID) != 16) return false;
 		if (riff_reader.GetChunkData(FMT_ID, &myWH, 16) == 0) return false;
 
@@ -44,13 +44,13 @@ namespace wwist::wav {
 		if (myWH.channel_num != 1		&& myWH.channel_num != 2) return false;
 
 		(*sample_rate) = static_cast<int>(myWH.sample_rate);
-		(*channel_num) = myWH.channel_num;
+		(*channel_num) = static_cast<short>(myWH.channel_num);
 
-		int data_size = riff_reader.GetChunkSize(DATA_ID);
+		int data_size = static_cast<int>(riff_reader.GetChunkSize(DATA_ID));
 		if (data_size == 0) return false;
 
 		int		bytes	= myWH.bit_rate / 8;
-		short*	tmp_buf = new short[data_size / bytes];
+		auto*	tmp_buf = new short[data_size / bytes];
 
 		if (riff_reader.GetChunkData(DATA_ID, tmp_buf, data_size) == 0) {
 			delete[] tmp_buf;
@@ -104,4 +104,4 @@ namespace wwist::wav {
 } // end wwist::wav
 
 
-#endif // __LOADER_WAV_H__
+#endif // LOADER_WAV_INCLUDE
