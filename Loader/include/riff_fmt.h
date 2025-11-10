@@ -1,5 +1,6 @@
-#ifndef AUDIO_FMT_INCLUDE
-#define AUDIO_FMT_INCLUDE
+#ifndef RIFF_FMT_INCLUDE
+#define RIFF_FMT_INCLUDE
+
 
 namespace wwist {
 
@@ -17,8 +18,6 @@ namespace wwist {
 	#define Chunk_ID(a, b, c, d) (a + (b << 8) + (c << 16) + (d << 24))
 	constexpr CHUNK_ID RIFF_ID = Chunk_ID('R', 'I', 'F', 'F');
 	constexpr CHUNK_ID LIST_ID = Chunk_ID('L', 'I', 'S', 'T');
-	constexpr CHUNK_ID FMT_ID  = Chunk_ID('f', 'm', 't', ' ');
-	constexpr CHUNK_ID DATA_ID = Chunk_ID('d', 'a', 't', 'a');
 
 	/**
 	 * @brief swaps the byte order of a 32-bit data value.
@@ -54,30 +53,7 @@ namespace wwist {
 			 + ((data & 0xFF00) >> 8);
 	};
 
-
-    /** Audio File Information */
-    struct AudioMetaData {
-        MY_WORD sample_rate;
-        MY_BYTE channel;
-        MY_BYTE bit_depth;
-
-    	AudioMetaData(const MY_WORD& sample_rate
-    				, const MY_BYTE& bit_depth
-    				, const MY_BYTE& channel)
-    	{
-    		this->sample_rate	= sample_rate;
-    		this->bit_depth		= bit_depth;
-    		this->channel		= channel;
-
-    	}
-    };
-
-
-	/** wav format data */
-    namespace wav {
-    }
-
 	// end wwist
 }
 
-#endif // AUDIO_FMT_INCLUDE
+#endif // RIFF_FMT_INCLUDE

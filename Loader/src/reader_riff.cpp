@@ -1,9 +1,8 @@
 #include <fstream>
-#include <map>
-#include <vector>
-#include <string>
-#include "audio_fmt.h"
-#include "riff_reader.h"
+#include <iostream>
+#include "wav_fmt.h"
+#include "reader_riff.h"
+
 
 void wwist::RIFFReader::Open(char file_path[])
 {
@@ -17,7 +16,7 @@ void wwist::RIFFReader::Open(char file_path[])
 		return;
 	}
 
-	struct stat f_stat;
+	struct stat f_stat{};
 	if (fstat(_fileno(fp_), &f_stat) == 0) {
 		file_size_ = f_stat.st_size;
 	}
@@ -51,6 +50,7 @@ void wwist::RIFFReader::Open(char file_path[])
 				break;
 		}
 	}
+
 }
 
 wwist::MY_DWORD wwist::RIFFReader::GetChunkNum(CHUNK_ID chunk_id)
