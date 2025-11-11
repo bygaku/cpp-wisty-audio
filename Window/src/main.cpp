@@ -1,6 +1,23 @@
-#include <windows.h>
-#include <cstdio>
+#include "application.h"
 
+#ifdef WIN32_APP
+/**  */
+#else
+int main (int argc, char *argv[]) {
+	Application app;
+	if (!app.Initialize(1200, 800, "skeleton")) {
+		printf("!! Initialize Failed !!\n");
+		return -1;
+	}
+
+	app.Run();
+	app.Finalize();
+
+	return 0;
+}
+#endif
+
+#ifdef NONE_APP_CLASS
 LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPARAM lP);
 
 #ifdef WIN32_APP
@@ -106,3 +123,5 @@ LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPARAM lP) {
 
 	return DefWindowProc(hWnd, uMsg, wP, lP);
 }
+#endif
+
