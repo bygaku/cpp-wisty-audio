@@ -13,7 +13,7 @@ int WINAPI WinMain (HINSTANCE hInstance,
 	}
 
 	app.Run();
-	app.Finalize();
+	app.Quit();
 
 	return 0;
 }
