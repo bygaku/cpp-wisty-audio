@@ -32,7 +32,7 @@ void Application::Run() {
 	}
 }
 
-void Application::Finalize() {
+void Application::Quit() {
 	if (hInstance_) {
 		UnregisterClass(kWindowClassName_, hInstance_);
 	}
@@ -40,7 +40,7 @@ void Application::Finalize() {
 	hInstance_	= nullptr;
 	hWnd_		= nullptr;
 
-	printf("Application was Closed Safely\n");
+	printf("Application was Quit Safely\n");
 }
 
 LRESULT CALLBACK Application::StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPARAM lP) {

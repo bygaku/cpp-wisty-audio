@@ -5,8 +5,6 @@
 #include <cstdint>
 #include <string>
 
-class IApplication;
-
 /**
  * @brief Easy wrapper class of WindowsAPI
  * @code
@@ -25,6 +23,14 @@ class IApplication;
  * @endcode
  */
 class Application {
+	const LPCTSTR kWindowClassName_ = "MainWindow";
+
+	HINSTANCE hInstance_;		// App instance handle
+	HWND	  hWnd_;			// Window handle
+	LPCTSTR	  window_name_;		// Name of title bar
+	int  	  w_;				// Window width
+	int  	  h_;				// Window height
+
 public:
 	/** @brief Constructor */
 	Application();
@@ -32,7 +38,7 @@ public:
 	/** @brief Destructor */
 	~Application() {
 		if (!hInstance_) return;
-		Application::Finalize();
+		Application::Quit();
 	}
 
 	/**
@@ -54,7 +60,7 @@ public:
 	 * @attention This method can be optionally written when you explicitly want to finalize it.
 	 * @attention Reason: it is automatically called in the destructor.
 	 */
-	void Finalize();
+	void Quit();
 
 private:
 	/**
@@ -63,7 +69,6 @@ private:
 	 * @param uMsg Message code.
 	 * @param wP Additional data related to the message.
 	 * @param lP Additional data related to the message.
-	 * @return
 	 */
 	static LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPARAM lP);
 
@@ -72,15 +77,6 @@ private:
 	 * @return If there is an error, return false.
 	 */
 	bool InitializeWindow();
-
-private:
-	const LPCTSTR kWindowClassName_ = "MainWindow";
-
-	HINSTANCE hInstance_;		// App instance handle
-	HWND	  hWnd_;			// Window handle
-	LPCTSTR	  window_name_;		// Name of title bar
-	int  	  w_;				// Window width
-	int  	  h_;				// Window height
 
 };
 

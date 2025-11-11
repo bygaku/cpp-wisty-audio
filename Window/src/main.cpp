@@ -1,7 +1,7 @@
 #include "application.h"
 
 #ifdef WIN32_APP
-/**  */
+/** WIN32 APP MODE */
 #else
 int main (int argc, char *argv[]) {
 	Application app;
@@ -11,7 +11,7 @@ int main (int argc, char *argv[]) {
 	}
 
 	app.Run();
-	app.Finalize();
+	app.Quit();
 
 	return 0;
 }
