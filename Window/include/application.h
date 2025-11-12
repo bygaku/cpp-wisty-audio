@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <string>
+#include "window.h"
 
 /**
  * @brief Easy wrapper class of WindowsAPI
@@ -23,13 +24,8 @@
  * @endcode
  */
 class Application {
-	const LPCTSTR kWindowClassName_ = "MainWindow";
-
 	HINSTANCE hInstance_;		// App instance handle
-	HWND	  hWnd_;			// Window handle
-	LPCTSTR	  window_name_;		// Name of title bar
-	int  	  w_;				// Window width
-	int  	  h_;				// Window height
+	Window	  main_window_;		// Main Window
 
 public:
 	/** @brief Constructor */
