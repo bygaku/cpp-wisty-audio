@@ -1,21 +1,14 @@
 #include "application.h"
 
 Application::Application()
-	: hInstance_	(nullptr)
-	, hWnd_			(nullptr)
-	, window_name_	("Default")
-	, w_			(800)
-	, h_			(600) {
-	hInstance_ = ::GetModuleHandle(nullptr);
+	: hInstance_	(::GetModuleHandle(nullptr))
+	, main_window_	{ } {
 }
 
 bool Application::Initialize(const int &size_w, const int &size_h, const std::string& window_name) {
-	window_name_ = window_name.c_str();
-	w_ = size_w;
-	h_ = size_h;
 	printf("Started Initializing the Application\n");
 
-	if (!InitializeWindow()) {
+	if (!main_window_.Initialize(size_w, size_h, window_name, true)) {
 		return false;
 	}
 
@@ -38,7 +31,6 @@ void Application::Quit() {
 	}
 
 	hInstance_	= nullptr;
-	hWnd_		= nullptr;
 
 	printf("Application was Quit Safely\n");
 }
@@ -52,6 +44,7 @@ LRESULT CALLBACK Application::StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPA
 #ifndef WIN32_APP
 #endif
 		::ShowWindow(hWnd, SW_SHOWNORMAL);
+		::UpdateWindow(hWnd);
 		printf("Window Creation Completed\n");
 		}
 		break;
@@ -75,7 +68,7 @@ bool Application::InitializeWindow() {
 	WNDCLASSEX wc{};
 	wc.hInstance			= hInstance_;
 	wc.lpszClassName		= kWindowClassName_;
-	wc.lpfnWndProc			= StaticWndProc;
+	wc.lpfnWndProc			= Window::StaticWndProc;
 	wc.style				= 0;
 	wc.cbSize				= sizeof(WNDCLASSEX);
 	wc.hIcon				= LoadIcon(nullptr, IDI_APPLICATION);
