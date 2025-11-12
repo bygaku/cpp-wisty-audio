@@ -4,10 +4,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <string>
-<<<<<<< HEAD
 #include "window.h"
-=======
->>>>>>> f0307e49844893c774a89fe082d0eb07bb62892a
 
 /**
  * @brief Easy wrapper class of WindowsAPI
