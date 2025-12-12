@@ -1,5 +1,6 @@
+#pragma region Wav_Loading_Test
 #include <iostream>
-#include "loader_wav.h"
+#include "wav_loader.h"
 #include <chrono>
 
 int main() {
@@ -7,31 +8,30 @@ int main() {
 
 	auto start = std::chrono::high_resolution_clock::now();
 
-	char file_path[] = "C:/Workspace/DevAudio/WistyAudio/Loader/resource/woodfairies.wav";
+	char file_path[] = "C:/Workspace/DevAudio/WistyAudio/Loader/resource/intuition.wav";
 	wav::BUFF_WAV buf_l;
 	wav::BUFF_WAV buf_r;
 
 	short	channels	= 0;
 	int		sample_rate = 0;
 
-	wav::ReadWavFile(file_path, &buf_l, &buf_r, &channels, &sample_rate);
-	auto end = std::chrono::high_resolution_clock::now();
-	auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-
-	std::vector<float> wav_l_float;
-	std::vector<float> wav_r_float;
-
-	for (int i = 0; i < buf_l.size(); i++) {
-		wav_l_float.push_back(static_cast<float>(buf_l[i]) / static_cast<float>(SHRT_MAX));
-		wav_r_float.push_back(static_cast<float>(buf_r[i]) / static_cast<float>(SHRT_MAX));
+	wav::Wave wave;
+	if (!LoadWave(file_path, &wave)) {
+		std::cerr << "LoadWavHeader ERROR!!" << std::endl;
+		return 0;
 	}
-	std::cout << "processing time: " << micro_seconds << std::endl;
 
-	printf("WAV file name: %s\n",			reinterpret_cast<char *>(file_path));
-	printf("WAV file size: %d\n",			static_cast<int>(buf_l.size()));
-	printf("WAV file size: %d\n",			static_cast<int>(buf_r.size()));
-	printf("WAV file channels: %d\n",		channels);
-	printf("WAV file sample rate: %d\n",	sample_rate);
+	auto end = std::chrono::high_resolution_clock::now();
+	auto time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+	std::cout << "processing time: " << time << std::endl;
+
+	printf("WAV file name: %s nano_sec\n",	reinterpret_cast<char*>(file_path));
+	printf("WAV file channels: %d\n",			wave.fmt.channel_num);
+	printf("WAV file block size: %d\n",		wave.fmt.block_size);
+	printf("WAV file sample rate: %d\n",		static_cast<int>(wave.fmt.sample_rate));
+	// printf("WAV file size: %d\n",				static_cast<int>(wav_header.data.ch.at(wav::Channel::L).size()));
+	// printf("WAV file size: %d\n",				static_cast<int>(wav_header.data.ch.at(wav::Channel::R).size()));
 
 	return 0;
 }
+#pragma endregion
