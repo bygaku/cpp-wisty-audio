@@ -5,16 +5,15 @@
 
 /** Window management class */
 class Window {
-	const LPCTSTR kWindowClassName_ = "MainWindow";
-
-	HWND	   hWnd_;			// Window handle
-	LPCTSTR	   window_name_;	// Name of title bar
-	int  	   w_;				// Window width
-	int  	   h_;				// Window height
+	LPCTSTR	   window_class_name_;	// Class Name
+	HWND	   hWnd_;			    // Window handle
+	LPCTSTR	   window_name_;	    // Name of title bar
+	int  	   w_;				    // Window width
+	int  	   h_;				    // Window height
 
 public:
 	/** @brief Constructor */
-	Window();
+	explicit Window(LPCTSTR window_class_name);
 
 	/** @brief Destructor */
 	~Window();
@@ -22,17 +21,18 @@ public:
 	void Show();
 	void Hide();
 	void Close();
+	void Quit( HINSTANCE hInstance, LPCTSTR window_class_name);
 
 	/**
 	 * @brief Start up the main window.
-	 * @param hinstance
+	 * @param hInstance
 	 * @param size_w: Window width. default: 800
 	 * @param size_h: Window height. default: 600
 	 * @param window_name: The name of window title bar. default: "Default"
 	 * @param main_window: Is this main window?
 	 * @return If there is an error, return false.
 	 */
-	bool Initialize(HINSTANCE hinstance, const int& size_w = 800, const int& size_h = 600, const std::string& window_name = "default", bool main_window = false);
+	bool Initialize(HINSTANCE hInstance, const int& size_w = 800, const int& size_h = 600, const std::string& window_name = "default", bool main_window = false);
 
 	void OnClose();
 

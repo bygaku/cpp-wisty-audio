@@ -59,20 +59,20 @@ public:
 	void Quit();
 
 private:
-	/**
-	 * @brief Window procedure.
-	 * @param hWnd Window handle.
-	 * @param uMsg Message code.
-	 * @param wP Additional data related to the message.
-	 * @param lP Additional data related to the message.
-	 */
-	static LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPARAM lP);
-
-	/**
-	 * @brief Start up the main window.
-	 * @return If there is an error, return false.
-	 */
-	bool InitializeWindow();
+	// /**
+	//  * @brief Window procedure.
+	//  * @param hWnd Window handle.
+	//  * @param uMsg Message code.
+	//  * @param wP Additional data related to the message.
+	//  * @param lP Additional data related to the message.
+	//  */
+	// static LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT uMsg, WPARAM wP, LPARAM lP);
+	//
+	// /**
+	//  * @brief Start up the main window.
+	//  * @return If there is an error, return false.
+	//  */
+	// bool InitializeWindow();
 
 };
 
